@@ -1,18 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JogadoresModule } from './jogadores/jogadores.module';
-
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://dordrian-clean:123naul123@cluster0.9tvtu.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5sxttu-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true',
-      {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-      },
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(`${process.env.MONGO_URI}`, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    }),
     JogadoresModule,
   ],
   controllers: [],
